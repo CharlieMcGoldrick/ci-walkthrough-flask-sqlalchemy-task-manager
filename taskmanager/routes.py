@@ -11,7 +11,12 @@ def home():
 
 @app.route("/categories")
 def categories():
-    return render_template("categories.html")
+    # Using the .all method will return a Cursor Object
+    # Wrapping the variable inside of list() will convert back to py list  
+    categories = list(Category.query.order_by(Category.category_name).all())
+    # 1st categories is the variable name to be used within the HTML template
+    # 2nd is the the variable name above that contains the list
+    return render_template("categories.html", categories=categories)
 
 
 @app.route("/add_category", methods=["GET", "POST"])
